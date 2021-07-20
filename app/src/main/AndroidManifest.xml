@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidAplication">
-        <activity android:name=".RegistroEncuesta"></activity>
+        <activity android:name=".UsuarioIngresado"></activity>
+        <activity android:name=".AccesoQR" />
+        <activity android:name=".RegistroEncuesta" />
         <activity android:name=".RegistroInvitado" />
         <activity android:name=".Login">
             <intent-filter>

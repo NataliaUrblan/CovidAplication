@@ -101,11 +101,12 @@
         android:layout_width="181dp"
         android:layout_height="48dp"
         android:backgroundTint="#8BC34A"
+        android:onClick="BtnIngresar"
         android:text="Ingresar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EdtMatricula"
-        app:layout_constraintVertical_bias="0.099"/>
+        app:layout_constraintVertical_bias="0.099" />
 </androidx.constraintlayout.widget.ConstraintLayout>
