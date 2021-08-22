@@ -11,4 +11,5 @@ public class AccesoQR extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso_q_r);
     }
+    public void h(){}
 }

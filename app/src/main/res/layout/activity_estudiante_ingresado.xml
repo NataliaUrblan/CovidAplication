@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EstudianteIngresado"
+    android:orientation="vertical">
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="366dp"
+        android:layout_height="103dp"
+        android:src="@drawable/logo"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="59dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/prueba"
+        android:layout_width="303dp"
+        android:layout_height="72dp"
+        android:fontFamily="@font/advent_pro"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224" />
+
+        <TextView
+            android:id="@+id/tvUsuario4"
+            android:layout_width="375dp"
+            android:layout_height="42dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="Cuestionario COVID"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.312" />
+
+        <TextView
+        android:id="@+id/tvInstruccion"
+        android:layout_width="340dp"
+        android:layout_height="119dp"
+        android:fontFamily="@font/advent_pro"
+        android:text="Antes de que ingreses a las instalaciones de la Universidad Anáhuac Querétaro, te pedimos que completes el siguiente cuestionario. Si respondes afirmativamente a cualquiera de los siguientes puntos, te pedimos que te comuniques con tu coordinador o Dir. De carrera para modificar la fecha de tu ingreso."
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.417" />
+
+
+
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="305dp"
+            android:layout_height="336dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.638"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.795">
+
+        </ListView>
+
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

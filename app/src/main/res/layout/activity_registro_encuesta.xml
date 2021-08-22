@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".RegistroEncuesta">
 
 
@@ -72,7 +72,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvInstrucciones"
+                android:id="@+id/tvInstruccion"
                 android:layout_width="wrap_content"
                 android:layout_height="115dp"
                 android:layout_marginStart="24dp"
@@ -204,7 +204,6 @@
                     android:text="No" />
             </RadioGroup>
 
-
             <TextView
                 android:id="@+id/tv_Instrucciones2"
                 android:layout_width="wrap_content"
@@ -234,6 +233,33 @@
                     android:id="@+id/btn_opcP6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="108dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvPregunta16"
+                        android:layout_width="184dp"
+                        android:layout_height="110dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="¿Padeces alguna enfermedad crónica?"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_siP16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/btn_noP16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
             </RadioGroup>
 
 
@@ -279,7 +305,6 @@
             </RadioGroup>
 
 
-
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
@@ -299,7 +324,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RadioGroup>
-
 
 
             <RadioGroup
@@ -323,8 +347,6 @@
             </RadioGroup>
 
 
-
-
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
@@ -346,7 +368,6 @@
             </RadioGroup>
 
 
-
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
@@ -366,7 +387,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RadioGroup>
-
 
 
             <RadioGroup
@@ -411,35 +431,6 @@
             </RadioGroup>
 
 
-
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="108dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvPregunta16"
-                    android:layout_width="184dp"
-                    android:layout_height="110dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:text="¿Padeces alguna enfermedad crónica?"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/btn_siP16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Si" />
-
-                <RadioButton
-                    android:id="@+id/btn_noP16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
-            </RadioGroup>
-
             <TextView
                 android:id="@+id/tvAvisotitulo"
                 android:layout_width="382dp"
@@ -471,6 +462,7 @@
             ‣ Evaluación personal por síntomas de COVID-19. "
                 android:textAlignment="center"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/tvAvisocontenido4"
                 android:layout_width="wrap_content"

@@ -15,6 +15,7 @@ public class RegistroEncuesta extends AppCompatActivity {
     }
     public void BtnRegistrarFormulario(View view){
         Intent formregistro = new Intent(this,AccesoQR.class);
+
         startActivity(formregistro);
     }
 }
