@@ -8,15 +8,15 @@
 
 
     <EditText
-        android:id="@+id/et1"
+        android:id="@+id/etCorreo"
         android:layout_width="319dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-
+        android:inputType="number"
+        android:maxLength="6"
         android:layout_marginBottom="30dp"
         android:hint="Ingresa tu ID de empleado"
-        android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,8 +44,9 @@
         android:layout_height="29dp"
         android:layout_marginEnd="104dp"
         android:fontFamily="@font/arimo"
-        android:text="Iniciar sesión"
+        android:text="INICIAR SESIÓN"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,16 +55,18 @@
         app:layout_constraintVertical_bias="0.357" />
 
     <Button
-        android:id="@+id/BtnLoginInvitado"
-        android:layout_width="181dp"
-        android:layout_height="48dp"
-        android:backgroundTint="#8BC34A"
+        android:id="@+id/BtnLoginRegistro"
+        android:layout_width="234dp"
+        android:layout_height="52dp"
+        android:backgroundTint="#FBFFF6"
         android:onClick="BtnIngresarEmp"
         android:text="Ingresar"
+        android:textColor="#151515"
+        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et1"
+        app:layout_constraintTop_toBottomOf="@+id/etCorreo"
         app:layout_constraintVertical_bias="0.099" />
 </androidx.constraintlayout.widget.ConstraintLayout>

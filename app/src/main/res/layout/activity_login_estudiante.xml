@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/et1"
+        android:id="@+id/etCorreo"
         android:layout_width="319dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
@@ -44,8 +44,9 @@
         android:layout_height="29dp"
         android:layout_marginEnd="104dp"
         android:fontFamily="@font/arimo"
-        android:text="Iniciar sesión"
+        android:text="INICIAR SESIÓN"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,16 +55,17 @@
         app:layout_constraintVertical_bias="0.353" />
 
     <Button
-        android:id="@+id/BtnLoginInvitado"
-        android:layout_width="181dp"
-        android:layout_height="48dp"
-        android:backgroundTint="#8BC34A"
+        android:id="@+id/BtnLoginRegistro"
+        android:layout_width="223dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#FFFFFF"
         android:onClick="BtnIngresar"
         android:text="Ingresar"
+        android:textColor="#121111"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et1"
+        app:layout_constraintTop_toBottomOf="@+id/etCorreo"
         app:layout_constraintVertical_bias="0.099" />
 </androidx.constraintlayout.widget.ConstraintLayout>

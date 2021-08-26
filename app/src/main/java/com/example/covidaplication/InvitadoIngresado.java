@@ -2,6 +2,7 @@ package com.example.covidaplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,30 +29,33 @@ import java.util.Map;
 
 public class InvitadoIngresado extends AppCompatActivity {
 
-    TextView  t2, t3, t4;
+    private TextView nombreInv, apellido, correo;
 
-    String et2_Ingresado="";
-    String et3_Ingresado="";
-    String et4_Ingresado="";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitado_ingresado);
+        nombreInv=findViewById(R.id.nomInvitado);
+        apellido=findViewById(R.id.ApellidoInvitado);
+        correo=findViewById(R.id.correoInvitado);
+        invitadoRegistrado();
 
-        et2_Ingresado=getIntent().getStringExtra("NombreInvitado");
-        et3_Ingresado=getIntent().getStringExtra("ApellidoPInvitado");
-        et4_Ingresado=getIntent().getStringExtra("ApellidoMInvitado");
+    }
+public void invitadoRegistrado(){
 
-        t2= findViewById(R.id.t2);
+        SharedPreferences preferences=getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String Correo=preferences.getString("Correo", "no hay informacion");
+        String Nombre=preferences.getString("Nombre", "no hay informacion");
+        String Apellido=preferences.getString("Apellido", "no hay informacion");
+        nombreInv.setText(Nombre);
+        apellido.setText(Apellido);
+        correo.setText(Correo);
 
-        sendDataInvitado(et2_Ingresado, et3_Ingresado, et4_Ingresado);
     }
 
-    public void sendDataInvitado(String nombre, String appellido1, String appellido2){
-        t2.setText("Bienvenido "+ nombre+appellido1+appellido2);
-    }
 }
 
 

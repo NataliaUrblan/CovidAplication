@@ -2,7 +2,9 @@ package com.example.covidaplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -33,8 +36,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmpleadoIngresado extends AppCompatActivity {
-  public int idSolicitud, idSolicitudCuestionario;
+public class SesionInvitado extends AppCompatActivity {
+
+   public int idSolicitud, idSolicitudCuestionario;
     int rbEstado1, rbEstado2, rbEstado3,  rbEstado4, rbEstado5;
     int cboxEstado1, cboxEstado2, cboxEstado3, cboxEstado4, cboxEstado5, cboxEstado6, cboxEstado7, cboxEstado8, cboxEstado9;
 
@@ -43,7 +47,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
     CheckBox s1,s2,s3,s4,s5,s6,s7,s8,s9;
     /*Variables para el metodo getUsuario */
     String idejemplo="1526";
-    TextView tv_preguntas,tvEmp;
+    TextView tv_preguntas,tvInvit,tvInvitadoNom, tvInvitadoApe, tvInvitadoCorr;
     String Idingresado="";
 
 
@@ -62,7 +66,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_empleado_ingresado);
+        setContentView(R.layout.activity_sesion_invitado);
         //button
 
         AndroidThreeTen.init(this);
@@ -90,52 +94,31 @@ public class EmpleadoIngresado extends AppCompatActivity {
         b5=(RadioButton) findViewById(R.id.rb5_1);
         b5_2=(RadioButton) findViewById(R.id.rb5_2);
 
-        //lo usamos para la lista
+
         lstDatos=(ListView) findViewById(R.id.lv_sintomas);
-        //tv_sintomas=(TextView) findViewById(R.id.tv_getSintomas);
         tv_preguntas=(TextView) findViewById(R.id.tv_getPreguntas);
+        tvInvitadoNom=findViewById(R.id.tvInvitadoNombre);
+        tvInvitadoApe=findViewById(R.id.tvInvitadoApellido);
+        tvInvitadoCorr=findViewById(R.id.tvInvitadoCorreo);
+        tvInvit=findViewById(R.id.tvInvitado);
 
-       // fecha=(EditText) findViewById(R.id.fecha);
-        tvEmp=findViewById(R.id.tvInvitado);
-        Idingresado=getIntent().getStringExtra("IdIngresado");
 
-
-        getUsuario(Idingresado);
         preguntasEmp();
         SitomasEmp();
+        GetInvitado();
     }
 
-    private void getUsuario(String Id){
 
-        String url = "http://services.uteq.edu.mx/api/covid19/personas/Empleados/125353";
-        // Crear nueva cola de peticiones
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        //int id = 125353;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, "http://services.uteq.edu.mx/api/covid19/personas/Empleados/"+Id,new Response.Listener<JSONObject>() {
+    public void GetInvitado() { //Valida que un usuario invitado este registrado con su correo
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("XD","ResponseXD: " + response.toString());
-                        try {
-                            JSONObject obj = new JSONObject(response.toString());
-
-                            String test = obj.getString("userNombre");
-                            tvEmp.append( test);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                   public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.e("errorrr", error.toString());
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
-    }
+        SharedPreferences preferences=getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String Correo=preferences.getString("Correo", "no hay informacion");
+        String Nombre=preferences.getString("Nombre", "no hay informacion");
+        String Apellido=preferences.getString("Apellido", "no hay informacion");
+        tvInvitadoNom.setText(Nombre);
+        tvInvitadoApe.setText(Apellido);
+        tvInvitadoCorr.setText(Correo);
+        }
 
 
     private void preguntasEmp(){
@@ -150,7 +133,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
                             JSONObject obj = response.getJSONObject(i);
                             String preguntas = obj.getString("pregunta");
                             tv_preguntas.append(preguntas+"\n");
-                          }
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -202,7 +185,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
 
 
     public void RespuestasQuestionarioEmp(View view) {
-      SolicitudesRespuestas();
+        SolicitudesRespuestas();
     }
 
     public void  SolicitudesRespuestas(){ //METODO QUE CREA UNA SOLICITUD Y GUARDA LAS RESPUESTAS DEL CUESTIONARIO
@@ -213,8 +196,8 @@ public class EmpleadoIngresado extends AppCompatActivity {
         JSONObject jsSolicitud = new JSONObject();
         try {
             jsSolicitud.put("fecha_solicitud", HoraAcceso);
-            jsSolicitud.put("persona_solicitud","Empleado");
-            jsSolicitud.put("tipo_persona",1);
+            jsSolicitud.put("persona_solicitud","Invitado");
+            jsSolicitud.put("tipo_persona",3);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -370,7 +353,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response.toString());
 
                             idSolicitudCuestionario= obj.getInt("id_solicitud");
-                        DictamenSolicitud(idSolicitudCuestionario);
+                            DictamenSolicitud(idSolicitudCuestionario);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -394,39 +377,39 @@ public class EmpleadoIngresado extends AppCompatActivity {
 
     }
 
-   public void DictamenSolicitud(int idDictamenSolicitud){
-       RequestQueue requestQueue = Volley.newRequestQueue(this);
-       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-               (Request.Method.GET, "http://services.uteq.edu.mx/api/covidDictamenSolicituds/DictaminaSolicitud/"+idDictamenSolicitud,new Response.Listener<JSONObject>() {
+    public void DictamenSolicitud(int idDictamenSolicitud){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, "http://services.uteq.edu.mx/api/covidDictamenSolicituds/DictaminaSolicitud/"+idDictamenSolicitud,new Response.Listener<JSONObject>() {
 
-                   @Override
-                   public void onResponse(JSONObject response) {
-                       Log.i("XD","ResponseXD: " + response.toString());
-                       try {
-                           JSONObject obj = new JSONObject(response.toString());
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("XD","ResponseXD: " + response.toString());
+                        try {
+                            JSONObject obj = new JSONObject(response.toString());
 
-                        int status= obj.getInt("status");
-                         String message= obj.getString("message");
-                         EnvioDictamenaQREmpleado(status, message);
-                       } catch (JSONException e) {
-                           e.printStackTrace();
-                       }
-                   }
-               }, new Response.ErrorListener() {
+                            int status= obj.getInt("status");
+                            String message= obj.getString("message");
+                            EnvioDictamenaQREmpleado(status, message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
 
-                   @Override
-                   public void onErrorResponse(VolleyError error) {
-                       // TODO: Handle error
-                       Log.e("errorrr", error.toString());
-                   }
-               });
-       requestQueue.add(jsonObjectRequest);
-   }
-   public void EnvioDictamenaQREmpleado(int status, String message){
-       Intent i = new Intent(this, AccesoQREmpleado.class);
-       i.putExtra("Status",  status);
-       i.putExtra("Message",  message);
-       startActivity(i);
-   }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("errorrr", error.toString());
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
+    }
+    public void EnvioDictamenaQREmpleado(int status, String message){
+        Intent i = new Intent(this, AccesoQREmpleado.class);
+        i.putExtra("Status",  status);
+        i.putExtra("Message",  message);
+        startActivity(i);
+    }
 }
 

@@ -2,6 +2,7 @@ package com.example.covidaplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ public class EstudianteIngresado extends AppCompatActivity
     TextView pruebax;
     String Matriculaingresada="";
     RequestQueue requestQueue;
-
     /*Variables para el metodo getPreguntas */
     RequestQueue requestQueuePreguntas;
     TextView tvp;
@@ -36,34 +36,19 @@ public class EstudianteIngresado extends AppCompatActivity
     List<String> datos = new ArrayList<String>();
     ListView lstDatos;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estudiante_ingresado);
-
         /* Variables inicializadas para el Metodo getUsuario*/
-
         tvUsuario=findViewById(R.id.prueba);
-
         Matriculaingresada=getIntent().getStringExtra("MatriculaIngresada");
-
-
-            getUsuario(Matriculaingresada);
-            getPreguntas();
-
-
-
+        getUsuario(Matriculaingresada);
+        getPreguntas();
         /*Inicializacion de listview*/
         lstDatos=(ListView)findViewById(R.id.lv);
-
-
-
-
     }
     private void getUsuario(String Matricula){
-
         requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonarrayRequest= new JsonArrayRequest(Request.Method.GET,"http://services.uteq.edu.mx/api/covid19/personas/Alumnos/"+Matricula,
                 new Response.Listener<JSONArray>() {
@@ -71,15 +56,18 @@ public class EstudianteIngresado extends AppCompatActivity
                     public void onResponse(JSONArray response) {
                         try {
                             for(int i = 0; i < response.length(); i++){
+
                                 JSONObject obj= response.getJSONObject(0);
                                 String matricula = obj.getString("matricula");
                                 String nompersona = obj.getString("nompersona");
                                 String appaterno = obj.getString("appaterno");
                                 String apmaterno = obj.getString("apmaterno");
                                 String idpersona = obj.getString("idpersona");
+                                    tvUsuario.append(matricula + "\n" + nompersona + "\n" + appaterno + "" + apmaterno + "\n" + idpersona + "\n");
+                               // Toast.makeText(EstudianteIngresado.this, obj.length, Toast.LENGTH_SHORT).show();
 
-                                tvUsuario.append(matricula+"\n"+nompersona+"\n"+appaterno+""+apmaterno+"\n"+idpersona+"\n");
                             }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -87,8 +75,6 @@ public class EstudianteIngresado extends AppCompatActivity
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                //Log.e("VOLLEY",error.getMessage());
             }
         }
         );
@@ -96,7 +82,6 @@ public class EstudianteIngresado extends AppCompatActivity
     }
 
     private void getPreguntas(){
-
         requestQueuePreguntas = Volley.newRequestQueue(this);
         JsonArrayRequest requestPreguntas = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override

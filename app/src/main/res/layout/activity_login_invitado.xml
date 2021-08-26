@@ -2,9 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginInvitado">
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/etCorreo"
+        android:layout_width="319dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="30dp"
+        android:hint="Ingresa tu correo"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.477" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,107 +37,61 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.892" />
 
-    <EditText
-        android:id="@+id/et1"
-        android:layout_width="319dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-
-        android:layout_marginBottom="30dp"
-        android:hint="Ingresa tu nombre "
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="201dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="104dp"
+        android:fontFamily="@font/arimo"
+        android:text="INICIAR SESIÓN"
         android:textAlignment="center"
+        android:textColor="#0C0C0C"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.342" />
-
-    <EditText
-        android:id="@+id/et5"
-        android:layout_width="319dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-
-        android:layout_marginBottom="30dp"
-        android:hint="Ingresa fecha"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
-
-    <EditText
-        android:id="@+id/et4"
-        android:layout_width="319dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-
-        android:layout_marginBottom="30dp"
-        android:hint="Ingresa tu correo "
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.683" />
-
-    <EditText
-        android:id="@+id/et3"
-        android:layout_width="319dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-
-        android:layout_marginBottom="30dp"
-        android:hint="Ingresa tu apellido materno"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
-
-    <EditText
-        android:id="@+id/et2"
-        android:layout_width="319dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-
-        android:layout_marginBottom="30dp"
-        android:hint="Ingresa tu apellido paterno"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.448" />
+        app:layout_constraintVertical_bias="0.357" />
 
     <Button
-        android:id="@+id/BtnLoginInvitado"
-        android:layout_width="181dp"
-        android:layout_height="48dp"
-        android:backgroundTint="#8BC34A"
-        android:onClick="RegistroInvitado"
+        android:id="@+id/btnIniciarSesionInvitado"
+        android:layout_width="232dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="BtnIniciarSesionInvitado"
         android:text="Ingresar"
+        android:textColor="#070707"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et1"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintTop_toBottomOf="@+id/etCorreo"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <Button
+        android:id="@+id/BtnRegistrarInvitado"
+        android:layout_width="231dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="BtnRegistrarInvitado"
+        android:text="Registrarse"
+        android:textColor="#121212"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCorreo"
+        app:layout_constraintVertical_bias="0.36" />
+
+    <TextView
+        android:id="@+id/usuarios"
+        android:layout_width="306dp"
+        android:layout_height="115dp"
+        android:text="users: "
+        android:textAlignment="center"
+        android:textColor="#2C2929"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="575dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

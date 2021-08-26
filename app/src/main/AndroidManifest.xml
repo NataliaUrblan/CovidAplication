@@ -11,9 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidAplication">
-        <activity android:name=".InvitadoIngresado"></activity>
-        <activity android:name=".LoginEstudiante" />
+        <activity android:name=".AccesoQREmpleado"></activity>
+        <activity android:name=".AccesoQRInvitado" />
+        <activity android:name=".AccesoQREstudiante" />
+        <activity android:name=".SesionInvitado" />
         <activity android:name=".LoginInvitado" />
+        <activity android:name=".InvitadoIngresado" />
+        <activity android:name=".LoginEstudiante" />
+        <activity android:name=".RegistrarInvitado" />
         <activity android:name=".EmpleadoIngresado" />
         <activity android:name=".EstudianteIngresado" />
         <activity android:name=".AccesoQR" />

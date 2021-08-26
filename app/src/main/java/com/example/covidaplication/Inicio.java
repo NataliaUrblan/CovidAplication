@@ -23,7 +23,7 @@ public class Inicio extends AppCompatActivity {
         startActivity(i);
     }
     public void BtnInvitado (View view){
-        Intent i = new Intent(this,LoginInvitado.class);
+        Intent i = new Intent(this, LoginInvitado.class);
         startActivity(i);
     }
 }

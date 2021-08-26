@@ -60,12 +60,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BtnLoginInvitado"
+        app:layout_constraintTop_toBottomOf="@+id/BtnLoginRegistro"
         app:layout_constraintVertical_bias="0.051"
         app:rippleColor="#FFFF" />
 
     <Button
-        android:id="@+id/BtnLoginInvitado"
+        android:id="@+id/BtnLoginRegistro"
         android:layout_width="181dp"
         android:layout_height="48dp"
         android:layout_marginBottom="280dp"
@@ -89,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BtnLoginInvitado"
+        app:layout_constraintTop_toBottomOf="@+id/BtnLoginRegistro"
         app:layout_constraintVertical_bias="0.318"
         app:rippleColor="#FFFF" />
 

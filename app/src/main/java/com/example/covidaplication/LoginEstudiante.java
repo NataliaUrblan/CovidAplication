@@ -3,8 +3,6 @@ package com.example.covidaplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.TextUtils;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
@@ -21,9 +19,7 @@ public class LoginEstudiante extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_estudiante);
-        EdtMatricula=findViewById(R.id.et1);
-      //  BtnIngresar=findViewById(R.id.BtnLoginInvitado);
-
+        EdtMatricula=findViewById(R.id.etCorreo);
     }
 
     public void BtnIngresar(View view){
