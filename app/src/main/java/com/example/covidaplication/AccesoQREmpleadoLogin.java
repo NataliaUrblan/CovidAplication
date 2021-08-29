@@ -17,39 +17,34 @@ import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class AccesoQREstudiante extends AppCompatActivity {
+public class AccesoQREmpleadoLogin extends AppCompatActivity {
 
-    String mensajeEstudiante;
-    int statusEstudiante;
-    String NombreE, ApellidoE;
-    ImageView QrImagenEstudiante;
-    TextView tvEstudianteNombre,tvEstudianteApellido, tvDictamenEstudiante;
+
+    ImageView QRImagenEmpleado;
+    TextView tvNombreEmpleado, tvApellidoEstudiante, tvDictamenEmpleado;
     QRGEncoder qrgEncoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acceso_q_r_estudiante);
-
-        NombreE=getIntent().getStringExtra("NomEstudiante");
-        ApellidoE=getIntent().getStringExtra("ApeEstudiante");
-
-        int statusEstudiante=getIntent().getIntExtra("Status", 0);
-        String mensajeEstudiante=getIntent().getStringExtra("Message");
+        setContentView(R.layout.activity_acceso_q_r_empleado_login);
 
 
-        tvEstudianteNombre = findViewById(R.id.NombreEstudiante);
-        tvEstudianteApellido= findViewById(R.id.ApellidoEstudiante);
-        tvEstudianteNombre.setText(NombreE);
-        tvEstudianteApellido.setText(ApellidoE);
 
-        QrImagenEstudiante = findViewById(R.id.ImageQREstudiante);
-        tvDictamenEstudiante = findViewById(R.id.DictamenEstudiante);
-        GenerarQR(mensajeEstudiante, statusEstudiante);
+        SharedPreferences preferences=getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE);
+        String NombreEmpleadoLogin=preferences.getString("NombreEmpleadoGuardado", "no hay informacion");
+        int statusEmpleado=preferences.getInt("statusGuardadoEmpleado", 0);
+        String mensajeEmpleado=preferences.getString("messageGuardadoEmpleado", "no hay informacion");
 
+        //TERMINA CODIGO PARA CONSULTAR FECHA
+
+        tvNombreEmpleado=findViewById(R.id.NombreEmpleadoLogin);
+        QRImagenEmpleado=findViewById(R.id.QREmpleadoLogin);
+        tvDictamenEmpleado=findViewById(R.id.DictamenEmpleadoLogin);
+        tvNombreEmpleado.setText(NombreEmpleadoLogin);
+        GenerarQR(mensajeEmpleado, statusEmpleado);
     }
 
     public void GenerarQR(String message, int status){
-
         //Log.i("este es el mensaje que si aparece", message);
         if (status == 200) {
             WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -75,17 +70,14 @@ public class AccesoQREstudiante extends AppCompatActivity {
                 bitmap = qrgEncoder.encodeAsBitmap();
                 // the bitmap is set inside our image
                 // view using .setimagebitmap method.
-                QrImagenEstudiante.setImageBitmap(bitmap);
+                QRImagenEmpleado.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 // this method is called for
                 // exception handling.
                 Log.e("Tag", e.toString());
             }
         } else {
-            tvDictamenEstudiante.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
+            tvDictamenEmpleado.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
         }
-
-
-
     }
 }

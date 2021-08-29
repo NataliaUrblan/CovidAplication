@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccesoQRInvitadoLogin"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="709dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Bienvenido"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:text="BIENVENIDO"
+                android:textAlignment="center"
+                android:textColor="#090808" />
+
+            <TextView
+                android:id="@+id/tvNombreInvitadoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:text=""
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tvApellidoInvitadoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:text=""
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/QREInvitadoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="190dp" />
+
+            <TextView
+                android:id="@+id/tvDictamenInvitadoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:text="" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

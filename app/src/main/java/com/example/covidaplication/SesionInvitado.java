@@ -2,9 +2,14 @@ package com.example.covidaplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,47 +35,49 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class SesionInvitado extends AppCompatActivity {
-
-   public int idSolicitud, idSolicitudCuestionario;
-    int rbEstado1, rbEstado2, rbEstado3,  rbEstado4, rbEstado5;
-    int cboxEstado1, cboxEstado2, cboxEstado3, cboxEstado4, cboxEstado5, cboxEstado6, cboxEstado7, cboxEstado8, cboxEstado9;
-
-    private static final String TAG = "EmpleadoIngresadoo";
+    int idSolicitudInvitadoCreado;
+    private TextView nombreInvitado, apellidoInvitado, correoInvitado;
+    public int idSolicitud, idSolicitudCuestionario;
+    private int rbEstado1, rbEstado2, rbEstado3,  rbEstado4, rbEstado5;
+    private int cboxEstado1, cboxEstado2, cboxEstado3, cboxEstado4, cboxEstado5, cboxEstado6, cboxEstado7, cboxEstado8, cboxEstado9;
+    private static final String TAG = "SesionInvitado";
     //Declaracion checkbox
-    CheckBox s1,s2,s3,s4,s5,s6,s7,s8,s9;
-    /*Variables para el metodo getUsuario */
-    String idejemplo="1526";
-    TextView tv_preguntas,tvInvit,tvInvitadoNom, tvInvitadoApe, tvInvitadoCorr;
-    String Idingresado="";
-
+    private CheckBox s1,s2,s3,s4,s5,s6,s7,s8,s9;
+    private TextView tv_preguntas,tvInvit,tvInvitadoNom, tvInvitadoApe, tvInvitadoCorr;
+    private int IdSolicitudInvitado;
 
     RadioButton b1, b1_2, b2, b2_2, b3, b3_2, b4, b4_2, b5, b5_2;
     JSONArray ejm = new JSONArray();
 
-    RequestQueue requestQueuePreguntas;
-    RequestQueue requestQueueSintomas;
-    String urlS ="http://services.uteq.edu.mx/api/covid19/context/CovidCuestionarioSintomas";
-    String urlpreguntas = "http://services.uteq.edu.mx/api/covid19/context/CovidCuestionarioPreguntas";
+    private RequestQueue requestQueuePreguntas;
+    private RequestQueue requestQueueSintomas;
+    private String urlS ="http://services.uteq.edu.mx/api/covid19/context/CovidCuestionarioSintomas";
+    private String urlpreguntas = "http://services.uteq.edu.mx/api/covid19/context/CovidCuestionarioPreguntas";
     /*Variables para el listview*/
     List<String> datos = new ArrayList<String>();
     ListView lstDatos;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sesion_invitado);
         //button
 
+        IdSolicitudInvitado=getIntent().getIntExtra( "idSolicitudInvitadoS", 0); //recupera el id de la solicitud
+        Log.e("", String.valueOf(IdSolicitudInvitado));
         AndroidThreeTen.init(this);
-
+        nombreInvitado=findViewById(R.id. tvInvitadoNombreSesion);
+        apellidoInvitado=findViewById(R.id.tvInvitadoApellidoSesion);
+        AndroidThreeTen.init(this); //se utiliza para la fecha
         //checkbox
         s1=(CheckBox) findViewById(R.id.s1);
         s2=(CheckBox) findViewById(R.id.s2);
@@ -81,7 +88,6 @@ public class SesionInvitado extends AppCompatActivity {
         s7=(CheckBox) findViewById(R.id.s7);
         s8=(CheckBox) findViewById(R.id.s8);
         s9=(CheckBox) findViewById(R.id.s9);
-
         //RadioButton
         b1=(RadioButton) findViewById(R.id.rb1_1);
         b1_2=(RadioButton) findViewById(R.id.rb1_2);
@@ -94,34 +100,35 @@ public class SesionInvitado extends AppCompatActivity {
         b5=(RadioButton) findViewById(R.id.rb5_1);
         b5_2=(RadioButton) findViewById(R.id.rb5_2);
 
-
         lstDatos=(ListView) findViewById(R.id.lv_sintomas);
         tv_preguntas=(TextView) findViewById(R.id.tv_getPreguntas);
-        tvInvitadoNom=findViewById(R.id.tvInvitadoNombre);
-        tvInvitadoApe=findViewById(R.id.tvInvitadoApellido);
-        tvInvitadoCorr=findViewById(R.id.tvInvitadoCorreo);
+        tvInvitadoNom=findViewById(R.id.tvInvitadoNombreSesion);
+        tvInvitadoApe=findViewById(R.id.tvInvitadoApellidoSesion);
         tvInvit=findViewById(R.id.tvInvitado);
 
-
-        preguntasEmp();
+        preguntasSesionInvitado();
         SitomasEmp();
-        GetInvitado();
+        invitadoRegistrado();
+       // saveRespuestas(IdSolicitudInvitado);
+
+}
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void invitadoRegistrado(){ //Consulta la informacion guardada en credenciales
+        SharedPreferences preferences=getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String NombreInvitadoSesion=preferences.getString("Nombre", "no hay informacion");
+        String ApellidoInvitadoSesion=preferences.getString("Apellido", "no hay informacion");
+        String fecha=preferences.getString("fecha", "no hay informacion");
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        LocalDateTime localDateTime = LocalDateTime.parse(fecha, dateTimeFormatter); //cambia el valor de la variable fecha string a date.
+        nombreInvitado.setText("Nombre: "+ NombreInvitadoSesion);
+        apellidoInvitado.setText("Apellido: "+ ApellidoInvitadoSesion);
+        Log.e("", String.valueOf(localDateTime)); //imprime en consola el valor de la fecha
+
     }
 
-
-    public void GetInvitado() { //Valida que un usuario invitado este registrado con su correo
-
-        SharedPreferences preferences=getSharedPreferences("credenciales", Context.MODE_PRIVATE);
-        String Correo=preferences.getString("Correo", "no hay informacion");
-        String Nombre=preferences.getString("Nombre", "no hay informacion");
-        String Apellido=preferences.getString("Apellido", "no hay informacion");
-        tvInvitadoNom.setText(Nombre);
-        tvInvitadoApe.setText(Apellido);
-        tvInvitadoCorr.setText(Correo);
-        }
-
-
-    private void preguntasEmp(){
+    private void preguntasSesionInvitado(){
         requestQueuePreguntas = Volley.newRequestQueue(this);
         JsonArrayRequest requestPreguntas = new JsonArrayRequest(Request.Method.GET, urlpreguntas, new Response.Listener<JSONArray>() {
             @Override
@@ -149,8 +156,6 @@ public class SesionInvitado extends AppCompatActivity {
         requestQueuePreguntas.add(requestPreguntas);
     }
 
-
-
     public void SitomasEmp(){
         requestQueueSintomas= Volley.newRequestQueue(this);
         JsonArrayRequest requestSintomas = new JsonArrayRequest(Request.Method.GET, urlS, new Response.Listener<JSONArray>() {
@@ -170,8 +175,6 @@ public class SesionInvitado extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
-
             }
 
         }, new Response.ErrorListener() {
@@ -184,7 +187,7 @@ public class SesionInvitado extends AppCompatActivity {
     }
 
 
-    public void RespuestasQuestionarioEmp(View view) {
+    public void RespuestasQuestionarioInvitado(View view) {
         SolicitudesRespuestas();
     }
 
@@ -377,6 +380,7 @@ public class SesionInvitado extends AppCompatActivity {
 
     }
 
+
     public void DictamenSolicitud(int idDictamenSolicitud){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -387,10 +391,9 @@ public class SesionInvitado extends AppCompatActivity {
                         Log.i("XD","ResponseXD: " + response.toString());
                         try {
                             JSONObject obj = new JSONObject(response.toString());
-
                             int status= obj.getInt("status");
                             String message= obj.getString("message");
-                            EnvioDictamenaQREmpleado(status, message);
+                            EnvioDictamenaQRInvitado(status, message);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -405,11 +408,11 @@ public class SesionInvitado extends AppCompatActivity {
                 });
         requestQueue.add(jsonObjectRequest);
     }
-    public void EnvioDictamenaQREmpleado(int status, String message){
-        Intent i = new Intent(this, AccesoQREmpleado.class);
+    public void EnvioDictamenaQRInvitado(int status, String message){
+        Intent i = new Intent(this, AccesoQRInvitadoLogin.class);
         i.putExtra("Status",  status);
         i.putExtra("Message",  message);
         startActivity(i);
     }
-}
 
+}

@@ -2,7 +2,9 @@ package com.example.covidaplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EmpleadoIngresado extends AppCompatActivity {
+    String NombreEmp="";
   public int idSolicitud, idSolicitudCuestionario;
     int rbEstado1, rbEstado2, rbEstado3,  rbEstado4, rbEstado5;
     int cboxEstado1, cboxEstado2, cboxEstado3, cboxEstado4, cboxEstado5, cboxEstado6, cboxEstado7, cboxEstado8, cboxEstado9;
@@ -120,8 +123,9 @@ public class EmpleadoIngresado extends AppCompatActivity {
                         try {
                             JSONObject obj = new JSONObject(response.toString());
 
-                            String test = obj.getString("userNombre");
-                            tvEmp.append( test);
+                            String Empleado = obj.getString("userNombre");
+                            NombreEmp=Empleado;
+                            tvEmp.append( Empleado);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -229,6 +233,14 @@ public class EmpleadoIngresado extends AppCompatActivity {
                             JSONObject objSolicitudA = new JSONObject(response.toString());
                             idSolicitud= objSolicitudA.getInt("id_solicitud");
                             RespuestasCuestionario(idSolicitud);
+                            //COMIENZA CODIGO PARA solicitud
+                            SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
+                            int soli=idSolicitud; //convierte hora y fecha en string para poder almacenarla en shared preferences
+                            SharedPreferences.Editor Objeditor = preferencias.edit();
+                            Objeditor.putInt("solicitud",soli); // Guarda fecha
+                            Objeditor.commit(); //hace commit para guardar los datos
+                            //TERMINA CODIGO DE FECHA CUESTIONARIO
+
                             Log.i("", "ESTE ES EL ID: "+ idSolicitud);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -254,7 +266,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
 
     public void RespuestasCuestionario (int idSolicitud){
         Log.i("", "ESTE ES EL ID: "+ idSolicitud);
-        LocalDateTime HoraFechaActual = LocalDateTime.now();
+        LocalDateTime HoraFechaActualEmpleado = LocalDateTime.now();
         if (b1.isChecked()){
             rbEstado1=1;
         }else
@@ -353,7 +365,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
             js.put("s7",cboxEstado7);
             js.put("s8",cboxEstado8);
             js.put("s9",cboxEstado9);
-            js.put("fechamod", HoraFechaActual);
+            js.put("fechamod", HoraFechaActualEmpleado);
             js.put("id_solicitud", idSolicitud );
 
         } catch (JSONException e) {
@@ -391,7 +403,13 @@ public class EmpleadoIngresado extends AppCompatActivity {
 
         };
         Volley.newRequestQueue(this).add(jsonObjReq);
-
+        //COMIENZA CODIGO PARA GUARDAR FECHA DEL CUESTIONARIO
+        SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
+        String fechaString=HoraFechaActualEmpleado.toString(); //convierte hora y fecha en string para poder almacenarla en shared preferences
+        SharedPreferences.Editor Objeditor = preferencias.edit();
+        Objeditor.putString("fecha",fechaString); // Guarda fecha
+        Objeditor.commit(); //hace commit para guardar los datos
+        //TERMINA CODIGO DE FECHA CUESTIONARIO
     }
 
    public void DictamenSolicitud(int idDictamenSolicitud){
@@ -424,9 +442,19 @@ public class EmpleadoIngresado extends AppCompatActivity {
    }
    public void EnvioDictamenaQREmpleado(int status, String message){
        Intent i = new Intent(this, AccesoQREmpleado.class);
+       //GUARDA LOS DATOS DE MSJ Y STATS PARA DESPUES CONSULTARLOS EN ACCESQREMPLEADOLOGIN
+       SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
+       SharedPreferences.Editor Objeditor = preferencias.edit();
+       Objeditor.putString("messageGuardadoEmpleado", message); // guarda correo
+       Objeditor.putInt("statusGuardadoEmpleado", status); // guarda nombre
+       Objeditor.putString("NombreEmpleadoGuardado", NombreEmp); // guarda nombre
+       Objeditor.commit(); //hace commit para guardar los datos
+       //termina codigo apra guardar el message y status del dictamen
+       i.putExtra("NombreEmp",  NombreEmp);
        i.putExtra("Status",  status);
        i.putExtra("Message",  message);
        startActivity(i);
    }
+
 }
 

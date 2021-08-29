@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
     tools:context=".AccesoQRInvitado">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="709dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Bienvenido"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:text="Bienvenido"
+            android:textAlignment="center"
+            android:textColor="#090808" />
+
+        <TextView
+            android:id="@+id/NombreUsuarioInvitado"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/ApellidoUsuarioInvitado"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="" />
+
+        <ImageView
+            android:id="@+id/QRInvitado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/DictamenInvitado"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="" />
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

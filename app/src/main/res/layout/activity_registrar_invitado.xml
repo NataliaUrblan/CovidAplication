@@ -16,6 +16,7 @@
             android:layout_height="680dp"
             android:orientation="vertical">
 
+
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="370dp"

@@ -17,39 +17,42 @@ import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class AccesoQREstudiante extends AppCompatActivity {
+public class AccesoQREstudianteLogin extends AppCompatActivity {
 
-    String mensajeEstudiante;
-    int statusEstudiante;
-    String NombreE, ApellidoE;
+
     ImageView QrImagenEstudiante;
-    TextView tvEstudianteNombre,tvEstudianteApellido, tvDictamenEstudiante;
+    TextView tvNombreEstudiante, tvApellidoEstudiante, tvDictamenEstudiante;
     QRGEncoder qrgEncoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acceso_q_r_estudiante);
-
-        NombreE=getIntent().getStringExtra("NomEstudiante");
-        ApellidoE=getIntent().getStringExtra("ApeEstudiante");
-
-        int statusEstudiante=getIntent().getIntExtra("Status", 0);
-        String mensajeEstudiante=getIntent().getStringExtra("Message");
+        setContentView(R.layout.activity_acceso_q_r_estudiante_login);
 
 
-        tvEstudianteNombre = findViewById(R.id.NombreEstudiante);
-        tvEstudianteApellido= findViewById(R.id.ApellidoEstudiante);
-        tvEstudianteNombre.setText(NombreE);
-        tvEstudianteApellido.setText(ApellidoE);
+        //INICIA CODIGO PARA CONSULTAR DATOS ESTUDIANTE
+        SharedPreferences preferences=getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE);
+        String NombreEstudianteLogin=preferences.getString("nombreEstudiante", "no hay informacion");
+        String ApellidoEstudianteLogin=preferences.getString("Appaterno", "no hay informacion");
+        int statusEstudiante=preferences.getInt("statusGuardadoEstudiante", 0);
+        String mensajeEstudiante=preferences.getString("messageGuardadoEstudiante", "no hay informacion");
 
-        QrImagenEstudiante = findViewById(R.id.ImageQREstudiante);
-        tvDictamenEstudiante = findViewById(R.id.DictamenEstudiante);
+        //TERMINA CODIGO PARA CONSULTAR FECHA
+
+        tvNombreEstudiante=findViewById(R.id.tvNombreEstudianteLogin);
+
+        tvApellidoEstudiante=findViewById(R.id.tvApellidoEstudianteLogin);
+
+        QrImagenEstudiante=findViewById(R.id.imgEstudianteLogin);
+        tvDictamenEstudiante=findViewById(R.id.tvDictamenEstudianteLogin);
+
+        tvNombreEstudiante.setText(NombreEstudianteLogin);
+
+        tvApellidoEstudiante.setText(ApellidoEstudianteLogin);
+
         GenerarQR(mensajeEstudiante, statusEstudiante);
-
     }
 
     public void GenerarQR(String message, int status){
-
         //Log.i("este es el mensaje que si aparece", message);
         if (status == 200) {
             WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -84,8 +87,5 @@ public class AccesoQREstudiante extends AppCompatActivity {
         } else {
             tvDictamenEstudiante.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
         }
-
-
-
     }
 }

@@ -41,7 +41,6 @@
         android:id="@+id/textView"
         android:layout_width="201dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="104dp"
         android:fontFamily="@font/arimo"
         android:text="INICIAR SESIÓN"
         android:textAlignment="center"
@@ -50,6 +49,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.357" />
 
@@ -83,15 +83,5 @@
         app:layout_constraintTop_toBottomOf="@+id/etCorreo"
         app:layout_constraintVertical_bias="0.36" />
 
-    <TextView
-        android:id="@+id/usuarios"
-        android:layout_width="306dp"
-        android:layout_height="115dp"
-        android:text="users: "
-        android:textAlignment="center"
-        android:textColor="#2C2929"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="575dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

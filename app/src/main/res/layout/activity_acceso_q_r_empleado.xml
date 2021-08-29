@@ -16,7 +16,7 @@
        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titulop"
+            android:id="@+id/Bienvenido"
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:text="ETO ES UNA PRUEBA"
@@ -24,18 +24,19 @@
             android:textColor="#090808" />
 
         <TextView
-            android:id="@+id/mensaje"
+            android:id="@+id/tvNombreInvitadoLogin"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="" />
 
 
         <ImageView
-        android:id="@+id/QrImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+            android:id="@+id/QrImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
         <TextView
-            android:id="@+id/TvDictamen"
+            android:id="@+id/tvDictamenInvitadoLogin"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="" />

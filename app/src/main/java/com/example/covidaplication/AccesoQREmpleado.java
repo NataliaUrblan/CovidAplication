@@ -29,9 +29,9 @@ public class AccesoQREmpleado extends AppCompatActivity {
 
         statusp=getIntent().getIntExtra("Status", 0);
         mensajep=getIntent().getStringExtra("Message");
-        tvm= findViewById(R.id.mensaje);
+        tvm= findViewById(R.id.tvNombreInvitadoLogin);
         QrImagen=findViewById(R.id.QrImage);
-        tvDictamenn=findViewById(R.id.TvDictamen);
+        tvDictamenn=findViewById(R.id.tvDictamenInvitadoLogin);
         metodop(mensajep);
         GenerarQR(mensajep, statusp);
 

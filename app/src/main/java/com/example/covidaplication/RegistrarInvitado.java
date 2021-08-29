@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.threeten.bp.LocalDateTime;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class RegistrarInvitado extends AppCompatActivity {
         EditText et3;
         EditText et4;
 
-
+        TextView hfecha;
         Button btnInsertar;
     String et1_Ingresado="";
     String et2_Ingresado="";
@@ -57,12 +58,13 @@ public class RegistrarInvitado extends AppCompatActivity {
         et2=(EditText) findViewById(R.id.et2);
         et3=(EditText) findViewById(R.id.et3);
         et4=(EditText) findViewById(R.id.et4);
-
         CargarPreferencias();
+
        // SharedPreferences preferences = getSharedPreferences("SaveCorreo",Context.MODE_PRIVATE );
         // et1.setText(preferences.getString("mail", ""));
 
     }
+
 
 
     public void RegistroInvitado(View view) {
@@ -101,8 +103,8 @@ public class RegistrarInvitado extends AppCompatActivity {
                                  Nombre= obj.getString("nombre");
                                  ApellidoP = obj.getString("appaterno");
                                  ApellidoM = obj.getString("apmaterno");
-
-                                 DatosInvitado(Nombre, ApellidoM, ApellidoP);
+                                 int idSolicitudInvitado = obj.getInt("id_solicitud");
+                                 DatosInvitado(idSolicitudInvitado, HoraAccesoInvitado);
                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -130,36 +132,38 @@ public class RegistrarInvitado extends AppCompatActivity {
 
             // Adding request to request queue
 
-        GuardarPreferencesCorreo(et1_Ingresado, et2_Ingresado, et4_Ingresado);
+        GuardarPreferencesCorreo(et1_Ingresado, et2_Ingresado, et4_Ingresado, HoraAccesoInvitado);
 
         }
-        public void CargarPreferencias(){
+        public void CargarPreferencias(){ //metodo que busca la informacion
         SharedPreferences preferences=getSharedPreferences("credenciales",Context.MODE_PRIVATE);
-        String Correo=preferences.getString("Correo", "no hay informacion");
+        String Correo=preferences.getString("Correo", "no hay informacion"); //busca el correo si no hay nada muestra el msj de no hay informacion
 
 
         }
 
 
-    public void GuardarPreferencesCorreo(String nombre, String apellido, String Correo){
-        SharedPreferences preferencias = getSharedPreferences("credenciales", Context.MODE_PRIVATE); //se ingresa lo que quiero buscar
+    public void GuardarPreferencesCorreo(String nombre, String apellido, String Correo, LocalDateTime  hora){
+        SharedPreferences preferencias = getSharedPreferences("credenciales", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
         String usuario=Correo;
         String Nombre=nombre;
         String Apellido=apellido;
-
+        int solicitudderegistro=0;
+        String fechaString=hora.toString(); //convierte hora y fecha en string para poder almacenarla en shared preferences
         SharedPreferences.Editor Objeditor = preferencias.edit();
-        Objeditor.putString("Correo", usuario); // aqui se guarda en mail lo que el usuario ingrese
-        Objeditor.putString("Nombre", Nombre); // aqui se guarda en mail lo que el usuario ingrese
-        Objeditor.putString("Apellido", Apellido); // aqui se guarda en mail lo que el usuario ingrese
-        Objeditor.commit(); //confirma que se guarde lo que recuperamos del edittext
+        Objeditor.putString("Correo", usuario); // guarda correo
+        Objeditor.putString("Nombre", Nombre); // guarda nombre
+        Objeditor.putString("Apellido", Apellido); // guarda apellido
+        Objeditor.putString("fecha",fechaString); // Guarda fecha
+        Objeditor.putInt("soliRegistro",solicitudderegistro);
+        Objeditor.commit(); //hace commit para guardar los datos
 
     }
 
-        public void DatosInvitado(String Nom, String Ap1, String Ap2){
-
+        public void DatosInvitado( int solicitudInvitado, LocalDateTime FechaHora){
             Intent i = new Intent(this, InvitadoIngresado.class);
+            i.putExtra("idSolicitudInvitado",  solicitudInvitado);
             startActivity(i);
-
-
         }
+
 }
