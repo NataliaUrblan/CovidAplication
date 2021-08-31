@@ -26,9 +26,12 @@ import org.json.JSONObject;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.util.IdentityHashMap;
+
 import javax.net.ssl.SSLEngineResult;
 
 public class LoginEmpleado extends AppCompatActivity {
+    int statusApi=0;
     String usuario;
     TextView tv1;
     EditText EdtIdEmpleado;
@@ -44,18 +47,76 @@ public class LoginEmpleado extends AppCompatActivity {
         AndroidThreeTen.init(this); //se utiliza para la fecha
        // ValidarUsuario(usuario);
     }
-    public void BtnIngresarEmp(View view){
-        SharedPreferences preferences = getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE);
-        int solicitud = preferences.getInt( "solicitud", 0);
-        idEmpleado=EdtIdEmpleado.getText().toString();
-       // int solicitud = getIntent().getIntExtra("solicitud", 0);
-        if(solicitud<=0  ){
-            Intent i = new Intent(this, EmpleadoIngresado.class);
-            i.putExtra("IdIngresado", idEmpleado);
-            Log.e("esta es el id", idEmpleado);
-            startActivity(i);
+    public void BtnIngresarEmp(View view) {
+        idEmpleado = EdtIdEmpleado.getText().toString();
+        if (EdtIdEmpleado.getText().toString().equals("")) {
+            Toast.makeText(this, "Tienes que ingresar una matricula válida",
+                    Toast.LENGTH_LONG).show();
+
+        } else if (EdtIdEmpleado.getText().toString().length() < 6) {
+            Toast.makeText(this, "Tamaño de matricula inválido",
+                    Toast.LENGTH_LONG).show();
+
         }else {
-            acciones();
+        // Crear nueva cola de peticiones
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //int id = 125353;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, "http://services.uteq.edu.mx/api/covid19/personas/Empleados/" + idEmpleado, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("XD", "ResponseXD: " + response.toString());
+                        try {
+                            JSONObject obj = new JSONObject(response.toString());
+                            int Status = obj.getInt("status");
+                            String MessageE = obj.getString("message");
+
+                            if (Status == 200) {
+                                statusApi = 1;
+                                verificasesion(idEmpleado, statusApi);
+                                Log.e("ESTE ES EL STATUS RESPUESTA", String.valueOf(statusApi));
+                            } else if (Status != 200) {
+                                statusApi = 0;
+                                verificasesion(idEmpleado, statusApi);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("errorrr", error.toString());
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
+         }
+    }
+
+    public void verificasesion(String idEmpleado, int StatusApi) {
+        if(StatusApi==1) {
+            SharedPreferences preferences = getSharedPreferences("DatosGuardadosEmpleado", Context.MODE_PRIVATE);
+            int solicitud = preferences.getInt("solicitud", 0);
+            int ValorStatus = preferences.getInt("StatusValue", 0);
+            if (ValorStatus > 200) {
+                Log.e("ESTE ES EL VALOR BUSCADO", String.valueOf(ValorStatus));
+                Toast.makeText(this, "Usuario no registrado", Toast.LENGTH_LONG).show();
+            } else {
+                if (solicitud <= 0) {
+                    Intent i = new Intent(this, EmpleadoIngresado.class);
+                    i.putExtra("IdIngresado", idEmpleado);
+                    Log.e("esta es el id", idEmpleado);
+                    startActivity(i);
+
+                } else {
+                    acciones();
+                }
+            }
+        }else {
+            Toast.makeText(this, "Empleado no encontrado, registrese como invitado", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -111,57 +172,16 @@ public class LoginEmpleado extends AppCompatActivity {
             }
 
         }
+
     }
-
-
-
-
-
-
-
-
-/*
 
 
 
 
     private void ValidarUsuario(String Usuario){
 
-        //String url = "http://services.uteq.edu.mx/api/covid19/personas/Empleados/125353";
-        // Crear nueva cola de peticiones
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, "http://services.uteq.edu.mx/api/covid19/personas/Empleados/"+Usuario,new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("XD","Response: " + response.toString());
-
-                            try {
-                            JSONObject obj = new JSONObject(response.toString());
-
-                                Log.i("XD","NO EXISTE: " + response.toString());
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.i("errrrrrrrrrrrrrrrr", "", e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.e("errorrr", error.toString());
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
     }
 
-
- */
 
 }
 

@@ -18,35 +18,56 @@
             <TextView
                 android:id="@+id/Bienvenido"
                 android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:text="BIENVENIDO"
+                android:layout_height="wrap_content"
+                android:text="Bienvenido"
                 android:textAlignment="center"
-                android:textColor="#090808" />
+                android:textColor="#090808"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvNombreInvitadoLogin"
+                android:id="@+id/tvNombreEmpleadoLogin"
                 android:layout_width="match_parent"
-                android:layout_height="33dp"
+                android:layout_height="wrap_content"
                 android:text=""
-                android:textAlignment="center" />
-
+                android:textAlignment="center"
+                android:textColor="#000000" />
             <TextView
                 android:id="@+id/tvApellidoInvitadoLogin"
                 android:layout_width="match_parent"
-                android:layout_height="31dp"
+                android:layout_height="wrap_content"
                 android:text=""
-                android:textAlignment="center" />
-
+                android:textAlignment="center"
+                android:textColor="#0E0D0D" />
             <ImageView
                 android:id="@+id/QREInvitadoLogin"
                 android:layout_width="match_parent"
-                android:layout_height="190dp" />
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
+
 
             <TextView
                 android:id="@+id/tvDictamenInvitadoLogin"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:text="" />
+                android:layout_height="36dp"
+                android:text=""
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/salirinvitadologin"
+                android:onClick="CerrarSesionInvitadoLogin"
+                android:text="Cerrar Sesión"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="280dp"
+                android:backgroundTint="#FEFFFD"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:iconTint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.513"
+                app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

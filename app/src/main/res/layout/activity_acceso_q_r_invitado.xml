@@ -18,22 +18,28 @@ android:layout_height="match_parent"
         <TextView
             android:id="@+id/Bienvenido"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
+            android:layout_height="30dp"
             android:text="Bienvenido"
             android:textAlignment="center"
-            android:textColor="#090808" />
+            android:textColor="#131313"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/NombreUsuarioInvitado"
             android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:text="" />
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="#101010" />
 
         <TextView
             android:id="@+id/ApellidoUsuarioInvitado"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:text="" />
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="#070707" />
 
         <ImageView
             android:id="@+id/QRInvitado"
@@ -45,6 +51,22 @@ android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:text="" />
+
+        <Button
+            android:id="@+id/btnsalirinvitado"
+            android:onClick="CerrarSesionInvitado"
+            android:text="Cerrar Sesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="280dp"
+            android:backgroundTint="#FEFFFD"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:iconTint="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
 </ScrollView>

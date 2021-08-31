@@ -73,10 +73,7 @@ public class RegistrarInvitado extends AppCompatActivity {
         et2_Ingresado=et2.getText().toString();
         et3_Ingresado=et3.getText().toString();
         et4_Ingresado=et4.getText().toString();
-
-
             String url ="http://services.uteq.edu.mx/api/Invitados";
-
             // Optional Parameters to pass as POST request
             JSONObject js = new JSONObject();
             try {
@@ -85,11 +82,9 @@ public class RegistrarInvitado extends AppCompatActivity {
                 js.put("apmaterno",et3_Ingresado);
                 js.put("correo",et4_Ingresado);
                 js.put("fechareg",HoraAccesoInvitado);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             // Make request for JSONObject
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                     Request.Method.POST, url, js,
@@ -99,7 +94,6 @@ public class RegistrarInvitado extends AppCompatActivity {
                             Log.i("","Response: " + response.toString());
                             try {
                                 JSONObject obj = new JSONObject(response.toString());
-
                                  Nombre= obj.getString("nombre");
                                  ApellidoP = obj.getString("appaterno");
                                  ApellidoM = obj.getString("apmaterno");

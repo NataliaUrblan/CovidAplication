@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccesoQRInvitado">
+    tools:context=".AccesoQREstudiante">
 
 
     <LinearLayout
@@ -19,6 +19,7 @@
             android:text="Bienvenido"
             android:textAlignment="center"
             android:textColor="#1E1D1D"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -46,5 +47,21 @@
             android:id="@+id/DictamenEstudiante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/CerrarSesionEstudiante"
+            android:text="Cerrar Sesión"
+            android:onClick="CerrarSesionEstudiante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="280dp"
+            android:backgroundTint="#FEFFFD"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:iconTint="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 </LinearLayout>

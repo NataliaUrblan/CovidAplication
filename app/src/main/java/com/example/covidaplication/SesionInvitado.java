@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -104,7 +102,7 @@ public class SesionInvitado extends AppCompatActivity {
         tv_preguntas=(TextView) findViewById(R.id.tv_getPreguntas);
         tvInvitadoNom=findViewById(R.id.tvInvitadoNombreSesion);
         tvInvitadoApe=findViewById(R.id.tvInvitadoApellidoSesion);
-        tvInvit=findViewById(R.id.tvInvitado);
+        tvInvit=findViewById(R.id.tvEmpleadoIngresado);
 
         preguntasSesionInvitado();
         SitomasEmp();

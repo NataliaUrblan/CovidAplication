@@ -44,6 +44,7 @@ public class EstudianteIngresado extends AppCompatActivity
     private TextView nombreEstudiante, apellidoEstudiante, correoEstudiante;
     private int idSolicitud, idSolicitudCuestionarioEstudiante;
     private int rbEstado1, rbEstado2, rbEstado3,  rbEstado4, rbEstado5;
+    private boolean bb1=false,bb2=false,bb3=false,bb4=false,bb5=false, bb6=false, bb7=false, bb8=false, bb9=false, bb10=false;
     private int cboxEstado1, cboxEstado2, cboxEstado3, cboxEstado4, cboxEstado5, cboxEstado6, cboxEstado7, cboxEstado8, cboxEstado9;
     private static final String TAG = "EstudianteIngresadoo";
 
@@ -118,44 +119,47 @@ public class EstudianteIngresado extends AppCompatActivity
 
 
     public void getUsuario(String Matricula){
-        requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonarrayRequest= new JsonArrayRequest(Request.Method.GET,"http://services.uteq.edu.mx/api/covid19/personas/Alumnos/"+Matricula,
-                new Response.Listener<JSONArray>() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //int id = 125353;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, "http://services.uteq.edu.mx/api/covid19/personas/Alumnos/"+ Matricula,new Response.Listener<JSONObject>() {
+
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            Log.e("Respuesta del response", String.valueOf(response.length()));
-                           Log.e("", String.valueOf(response));
-                                for (int i = 0; i < response.length(); i++) {
-                                    JSONObject obj = response.getJSONObject(0);
-                                    String matricula = obj.getString("matricula");
-                                    String nompersona = obj.getString("nompersona");
-                                    String appaterno = obj.getString("appaterno");
-                                    String apmaterno = obj.getString("apmaterno");
-                                    String idpersona = obj.getString("idpersona");
-                                   nom=nompersona;
-                                   ape=appaterno;
-                                    getMatriculaEstudiante =obj.getInt("matricula");
 
-                                    //COMIENZA CODIGO PARA DATOS DEL ESTUDIANTE
-                                    SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
-                                    String matriculaEstudiante=matricula;
-                                    String NombreEstudiante=nompersona;
-                                    String ApellidoEstudianteP=apmaterno;
-                                    String ApellidoEstudianteM=apmaterno;
-                                    SharedPreferences.Editor Objeditor = preferencias.edit();
-                                    Objeditor.putString("matricula",matriculaEstudiante);
-                                    Objeditor.putString("nombreEstudiante",NombreEstudiante);
-                                    Objeditor.putString("Appaterno",ApellidoEstudianteP);
-                                    Objeditor.putString("Apmaterno",ApellidoEstudianteM);
-                                    Objeditor.commit(); //hace commit para guardar los datos
-                                    //TERMINA CODIGO
+                            JSONObject obj = new JSONObject(response.toString());
+                            int Status = obj.getInt("status");   //Obtiene el status
+                            JSONArray jsonArray = response.getJSONArray("message"); //Accede a message
+                            JSONObject jsonObject = jsonArray.getJSONObject(0); //0 indica el primer objeto dentro del array.
+
+                                    String nompersona = jsonObject.getString("nompersona"); //trae nombre
+                                    String appaterno = jsonObject.getString("appaterno"); //trae apellido paterno
+                                    String apmaterno = jsonObject.getString("apmaterno"); //trae apellido materno
+                                    String matricula = jsonObject.getString("matricula"); //trae matricula
+                                    String idpersona = jsonObject.getString("idpersona"); //trae idpersona
 
 
-                                        tvUsuario.append(matricula + "\n" + nompersona + "\n" + appaterno + "" + apmaterno + "\n" + idpersona + "\n");
-                                        // Toast.makeText(EstudianteIngresado.this, obj.length, Toast.LENGTH_SHORT).show();
+                                         nom = nompersona;
+                                         ape = appaterno;
 
-                                }
+
+                                         //COMIENZA CODIGO PARA GUARDAR DATOS DEL ESTUDIANTE
+                                         SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
+                                         String matriculaEstudiante = matricula;
+                                         String NombreEstudiante = nompersona;
+                                         String ApellidoEstudianteP = apmaterno;
+                                         String ApellidoEstudianteM = apmaterno;
+                                         SharedPreferences.Editor Objeditor = preferencias.edit();
+                                         Objeditor.putString("matricula", matriculaEstudiante);
+                                         Objeditor.putString("nombreEstudiante", NombreEstudiante);
+                                         Objeditor.putString("Appaterno", ApellidoEstudianteP);
+                                         Objeditor.putString("Apmaterno", ApellidoEstudianteM);
+                                         Objeditor.commit(); //hace commit para guardar los datos
+                                         //TERMINA CODIGO
+                                         tvUsuario.append( nompersona + "\n" + appaterno + "" + apmaterno + "\n" );
+                                         // Toast.makeText(EstudianteIngresado.this, obj.length, Toast.LENGTH_SHORT).show();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -167,7 +171,8 @@ public class EstudianteIngresado extends AppCompatActivity
             }
         }
         );
-        requestQueue.add(jsonarrayRequest);
+        requestQueue.add(jsonObjectRequest);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -177,7 +182,6 @@ public class EstudianteIngresado extends AppCompatActivity
         JsonArrayRequest requestPreguntas = new JsonArrayRequest(Request.Method.GET, urlpreguntas, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 if(response.length()>0){
                     try{
                         for(int i=0; i<response.length(); i++) {
@@ -233,6 +237,7 @@ public class EstudianteIngresado extends AppCompatActivity
 
 
     public void RespuestasQuestionarioEstudiante(View view) {
+
         SolicitudesRespuestas();
     }
 
@@ -285,39 +290,45 @@ public class EstudianteIngresado extends AppCompatActivity
 
 
     public void RespuestasCuestionario (int idSolicitud){
-
-
         Log.i("", "ESTE ES EL ID: "+ idSolicitud);
         LocalDateTime HoraFechaActualE = LocalDateTime.now();
         if (b1.isChecked()){
             rbEstado1=1;
+            bb1=true;
         }else
         if (b1_2.isChecked()) {
             rbEstado1=0;
+            bb2=true;
         }
         if (b2.isChecked()){
             rbEstado2=1;
+            bb3=true;
 
         }else  if (b2_2.isChecked()){
             rbEstado2=0;
+            bb4=true;
         }
         if (b3.isChecked()){
             rbEstado3=1;
-
+            bb5=true;
         }else  if (b3_2.isChecked()){
             rbEstado3=0;
+            bb6=true;
         }
         if (b4.isChecked()){
             rbEstado4=1;
+            bb7=true;
 
         }else  if (b4_2.isChecked()){
             rbEstado4=0;
+            bb8=true;
         }
         if (b5.isChecked()){
             rbEstado5=1;
-
+            bb9=true;
         }else  if (b5_2.isChecked()){
             rbEstado5=0;
+            bb10=true;
         }
         //condiciones para checkbox
         if (s1.isChecked()){
@@ -366,80 +377,78 @@ public class EstudianteIngresado extends AppCompatActivity
             cboxEstado9=0;
         }
 
-        //REALIZA EL POST CON LAS RESPUESTAS DE UN CUESTIONARIO
+            //REALIZA EL POST CON LAS RESPUESTAS DE UN CUESTIONARIO
+            String url = "http://services.uteq.edu.mx/api/covid19/app/CovidCuestionarios";
+            // Optional Parameters to pass as POST request
+            JSONObject js = new JSONObject();
+            try {
+                js.put("p1", rbEstado1);
+                js.put("p2", rbEstado2);
+                js.put("p3", rbEstado3);
+                js.put("p4", rbEstado4);
+                js.put("p5", rbEstado5);
+                js.put("s1", cboxEstado1);
+                js.put("s2", cboxEstado2);
+                js.put("s3", cboxEstado3);
+                js.put("s4", cboxEstado4);
+                js.put("s5", cboxEstado5);
+                js.put("s6", cboxEstado6);
+                js.put("s7", cboxEstado7);
+                js.put("s8", cboxEstado8);
+                js.put("s9", cboxEstado9);
+                js.put("fechamod", HoraFechaActualE);
+                js.put("id_solicitud", idSolicitud);
 
-        String url ="http://services.uteq.edu.mx/api/covid19/app/CovidCuestionarios";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            // Make request for JSONObject
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                    Request.Method.POST, url, js,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i("", "Response: " + response.toString());
+                            try {
+                                JSONObject obj = new JSONObject(response.toString());
 
-        // Optional Parameters to pass as POST request
-        JSONObject js = new JSONObject();
-        try {
-            js.put("p1",rbEstado1);
-            js.put("p2",rbEstado2);
-            js.put("p3",rbEstado3);
-            js.put("p4",rbEstado4);
-            js.put("p5",rbEstado5);
-            js.put("s1",cboxEstado1);
-            js.put("s2",cboxEstado2);
-            js.put("s3",cboxEstado3);
-            js.put("s4",cboxEstado4);
-            js.put("s5",cboxEstado5);
-            js.put("s6",cboxEstado6);
-            js.put("s7",cboxEstado7);
-            js.put("s8",cboxEstado8);
-            js.put("s9",cboxEstado9);
-            js.put("fechamod", HoraFechaActualE);
-            js.put("id_solicitud", idSolicitud );
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Make request for JSONObject
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, js,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("","Response: " + response.toString());
-                        try {
-                            JSONObject obj = new JSONObject(response.toString());
-
-                            int idSolicitudCuestionario= obj.getInt("id_solicitud");
-                            DictamenSolicitud(idSolicitudCuestionario);
+                                int idSolicitudCuestionario = obj.getInt("id_solicitud");
+                                DictamenSolicitud(idSolicitudCuestionario);
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
 
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                return headers;
-            }
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    return headers;
+                }
 
-        };
-        Volley.newRequestQueue(this).add(jsonObjReq);
-        //COMIENZA CODIGO PARA GUARDAR FECHA DEL CUESTIONARIO
-        SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
-        String fechaString=HoraFechaActualE.toString(); //convierte hora y fecha en string para poder almacenarla en shared preferences
-        SharedPreferences.Editor Objeditor = preferencias.edit();
-        Objeditor.putString("fecha",fechaString); // Guarda fecha
-        Objeditor.commit(); //hace commit para guardar los datos
-        //TERMINA CODIGO DE FECHA CUESTIONARIO
-    }
+            };
+            Volley.newRequestQueue(this).add(jsonObjReq);
+            //COMIENZA CODIGO PARA GUARDAR FECHA DEL CUESTIONARIO
+            SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
+            String fechaString = HoraFechaActualE.toString(); //convierte hora y fecha en string para poder almacenarla en shared preferences
+            SharedPreferences.Editor Objeditor = preferencias.edit();
+            Objeditor.putString("fecha", fechaString); // Guarda fecha
+            Objeditor.commit(); //hace commit para guardar los datos
+            //TERMINA CODIGO DE FECHA CUESTIONARIO
+        }
+
     public void DictamenSolicitud(int idDictamenSolicitud){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, "http://services.uteq.edu.mx/api/covidDictamenSolicituds/DictaminaSolicitud/"+idDictamenSolicitud,new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("XD","ResponseXD: " + response.toString());
@@ -448,7 +457,6 @@ public class EstudianteIngresado extends AppCompatActivity
                             int status= obj.getInt("status");
                             String message= obj.getString("message");
                             EnvioDictamenaQREstudiante(status, message);
-
                             //EnvioDictamenaQREstudianteLogin(status, message);
 
                         } catch (JSONException e) {
@@ -456,7 +464,6 @@ public class EstudianteIngresado extends AppCompatActivity
                         }
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
@@ -480,23 +487,6 @@ public class EstudianteIngresado extends AppCompatActivity
         i.putExtra("Message",  message);
         startActivity(i);
     }
-
-    /*
-    public void EnvioDictamenaQREstudianteLogin(int status, String message){
-        ///inicia codigo apra guardar el message y status del dictamen
-        SharedPreferences preferencias = getSharedPreferences("DatosGuardadosEstudiante", Context.MODE_PRIVATE); //credenciales es nombre de las preferencias donde se almacenara todos los datos.
-        SharedPreferences.Editor Objeditor = preferencias.edit();
-        Objeditor.putString("messageGuardadoEstudiante", message); // guarda correo
-        Objeditor.putInt("statusGuardadoEstudiante", status); // guarda nombre
-        Objeditor.commit(); //hace commit para guardar los datos
-        //termina codigo apra guardar el message y status del dictamen
-        Intent i = new Intent(this, AccesoQREstudianteLogin.class);
-        i.putExtra("Status",  status);
-        i.putExtra("Message",  message);
-        startActivity(i);
-    }
-
-     */
 
 }
 

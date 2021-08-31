@@ -3,12 +3,14 @@ package com.example.covidaplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +40,7 @@ public class AccesoQRInvitadoLogin extends AppCompatActivity {
         String mensajeinvitadoLogin=preferences.getString("message", "no hay informacion");
         //TERMINA CODIGO
 
-        tvNombreInvitado=findViewById(R.id.tvNombreInvitadoLogin);
+        tvNombreInvitado=findViewById(R.id.tvNombreEmpleadoLogin);
 
         tvApellidoInvitado=findViewById(R.id.tvApellidoInvitadoLogin);
         
@@ -90,5 +92,9 @@ public class AccesoQRInvitadoLogin extends AppCompatActivity {
         } else{
                 tvDictamenInvitadoLogin.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
        }
+    }
+    public void CerrarSesionInvitadoLogin(View view) {
+        Intent i = new Intent(this,Inicio.class);
+        startActivity(i);
     }
  }

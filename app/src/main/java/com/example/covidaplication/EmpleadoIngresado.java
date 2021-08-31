@@ -46,7 +46,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
     CheckBox s1,s2,s3,s4,s5,s6,s7,s8,s9;
     /*Variables para el metodo getUsuario */
     String idejemplo="1526";
-    TextView tv_preguntas,tvEmp;
+    TextView tv_preguntas,tvNombreEmpleado;
     String Idingresado="";
 
 
@@ -99,7 +99,7 @@ public class EmpleadoIngresado extends AppCompatActivity {
         tv_preguntas=(TextView) findViewById(R.id.tv_getPreguntas);
 
        // fecha=(EditText) findViewById(R.id.fecha);
-        tvEmp=findViewById(R.id.tvInvitado);
+        tvNombreEmpleado=findViewById(R.id.tvEmpleadoIngresado);
         Idingresado=getIntent().getStringExtra("IdIngresado");
 
 
@@ -109,23 +109,23 @@ public class EmpleadoIngresado extends AppCompatActivity {
     }
 
     private void getUsuario(String Id){
-
         String url = "http://services.uteq.edu.mx/api/covid19/personas/Empleados/125353";
         // Crear nueva cola de peticiones
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         //int id = 125353;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, "http://services.uteq.edu.mx/api/covid19/personas/Empleados/"+Id,new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("XD","ResponseXD: " + response.toString());
                         try {
-                            JSONObject obj = new JSONObject(response.toString());
+                            JSONObject jObject = new JSONObject(response.toString());
+                            int Status = jObject.getInt("status");   //Obtiene el status
 
-                            String Empleado = obj.getString("userNombre");
-                            NombreEmp=Empleado;
-                            tvEmp.append( Empleado);
+                            JSONObject jObject2 = jObject.getJSONObject("message");
+                            NombreEmp = jObject2.getString("userNombre");
+                            tvNombreEmpleado.setText(NombreEmp);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

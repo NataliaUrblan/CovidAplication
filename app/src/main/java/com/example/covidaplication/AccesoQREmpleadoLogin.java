@@ -3,12 +3,14 @@ package com.example.covidaplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ public class AccesoQREmpleadoLogin extends AppCompatActivity {
 
 
     ImageView QRImagenEmpleado;
-    TextView tvNombreEmpleado, tvApellidoEstudiante, tvDictamenEmpleado;
+    TextView tvNombreEmpleado,   tvDictamenEmpleado;
     QRGEncoder qrgEncoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class AccesoQREmpleadoLogin extends AppCompatActivity {
         QRImagenEmpleado=findViewById(R.id.QREmpleadoLogin);
         tvDictamenEmpleado=findViewById(R.id.DictamenEmpleadoLogin);
         tvNombreEmpleado.setText(NombreEmpleadoLogin);
+         Log.e("este es el empleado",NombreEmpleadoLogin );
         GenerarQR(mensajeEmpleado, statusEmpleado);
     }
 
@@ -79,5 +82,9 @@ public class AccesoQREmpleadoLogin extends AppCompatActivity {
         } else {
             tvDictamenEmpleado.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
         }
+    }
+    public void CerrarSesionEmpleadoLogin(View view) {
+        Intent i = new Intent(this,Inicio.class);
+        startActivity(i);
     }
 }

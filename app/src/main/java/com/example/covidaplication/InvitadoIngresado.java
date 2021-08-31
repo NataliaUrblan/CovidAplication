@@ -102,7 +102,7 @@ public class InvitadoIngresado extends AppCompatActivity {
         tvInvitadoNom=findViewById(R.id.NombreInvitado);
         tvInvitadoApe=findViewById(R.id.ApellidoInvitado);
         tvInvitadoCorr=findViewById(R.id.CorreoInvitado);
-        tvInvit=findViewById(R.id.tvInvitado);
+        tvInvit=findViewById(R.id.tvEmpleadoIngresado);
 
         preguntasInvitadoIngresado();
         SitomasEmp();

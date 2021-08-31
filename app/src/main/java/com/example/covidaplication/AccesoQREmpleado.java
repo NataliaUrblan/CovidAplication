@@ -1,11 +1,13 @@
 package com.example.covidaplication;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,28 +19,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class AccesoQREmpleado extends AppCompatActivity {
-        String mensajep;
+        private String mensajep, nombreEmpleado;
         int statusp;
         ImageView QrImagen;
-        TextView tvm, tvDictamenn;
+        TextView NombreEmpleadoLogin, tvDictamenn;
         QRGEncoder qrgEncoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso_q_r_empleado);
 
+        nombreEmpleado=getIntent().getStringExtra( "NombreEmp");
         statusp=getIntent().getIntExtra("Status", 0);
         mensajep=getIntent().getStringExtra("Message");
-        tvm= findViewById(R.id.tvNombreInvitadoLogin);
-        QrImagen=findViewById(R.id.QrImage);
-        tvDictamenn=findViewById(R.id.tvDictamenInvitadoLogin);
-        metodop(mensajep);
+        NombreEmpleadoLogin= findViewById(R.id.tvNombreEmpleado);
+        QrImagen=findViewById(R.id.QrImageEmp);
+        tvDictamenn=findViewById(R.id.tvDictamenEmp);
+        NombreEmpleadoLogin.setText(nombreEmpleado);
         GenerarQR(mensajep, statusp);
 
     }
-    public void metodop(String msj){
-        tvm.setText("Este es el mensaje"+msj);
-    }
+
 
     public void GenerarQR(String message, int status){
         //tvMensaje.append("este es el msj"+message);
@@ -76,8 +77,9 @@ public class AccesoQREmpleado extends AppCompatActivity {
         } else {
             tvDictamenn.setText("De acuerdo a su solicitud procesada no es permitido el acceso a las instalaciones, comuniquese con su director de carrera.");
         }
-
-
-
+    }
+    public void CerrarSesionEmpleado(View view) {
+        Intent i = new Intent(this,Inicio.class);
+        startActivity(i);
     }
 }
